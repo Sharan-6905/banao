@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BANAO STUDIOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0a0a;
+  --cream: #f0ead6;
+  --acid: #FF5F00;
+  --mono: 'Space Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--mono);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cream);
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--acid);
+  color: var(--black);
+}
+
+
+/* DIVIDER */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--cream);
+  opacity: 0.3;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-d1 { animation-delay: 0.15s; }
+.reveal-d2 { animation-delay: 0.3s; }
+.reveal-d3 { animation-delay: 0.45s; }
+.reveal-d4 { animation-delay: 0.6s; }
+.reveal-d5 { animation-delay: 0.75s; }
+
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SCROLL REVEAL */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px clamp(24px, 5vw, 80px);
+  background: var(--black);
+  border-bottom: 1px solid rgba(240, 234, 214, 0.1);
+}
+
+.nav-brand {
+  font-family: var(--display);
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(24px, 5vw, 80px);
+}
+
+.hero-headline {
+  font-family: var(--display);
+  font-size: clamp(60px, 15vw, 200px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.hero-sub {
+  margin-top: 40px;
+  font-size: clamp(12px, 1.2vw, 16px);
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.hero-sub .blink {
+  animation: blink 1s step-end infinite;
+}
+
+.hero-tagline {
+  margin-top: 16px;
+  font-size: clamp(11px, 1vw, 13px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* MARQUEE */
+.marquee-wrap {
+  overflow: hidden;
+  background: var(--acid);
+  padding: 14px 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track span {
+  font-family: var(--display);
+  font-size: clamp(18px, 2.5vw, 32px);
+  color: var(--black);
+  white-space: nowrap;
+  padding: 0 24px;
+  letter-spacing: 0.05em;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* SECTION PADDING */
+.section {
+  padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 12px;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(48px, 10vw, 140px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* MANIFESTO */
+.manifesto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 120px);
+  align-items: start;
+}
+
+.manifesto-left .section-title {
+  font-size: clamp(36px, 7vw, 100px);
+  margin-bottom: 32px;
+}
+
+.manifesto-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.manifesto-points li {
+  font-size: clamp(12px, 1.1vw, 15px);
+  line-height: 1.7;
+  opacity: 0.6;
+  padding-left: 24px;
+  position: relative;
+}
+
+.manifesto-points li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: var(--acid);
+  opacity: 1;
+}
+
+/* PRONUNCIATION */
+.pronunciation {
+  display: flex;
+  align-items: center;
+  gap: clamp(32px, 4vw, 64px);
+  padding: clamp(40px, 5vw, 80px) clamp(24px, 5vw, 80px);
+}
+
+.pronunciation-hindi {
+  font-family: var(--display);
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1;
+}
+
+.pronunciation-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pronunciation-phonetic {
+  font-size: clamp(16px, 2vw, 24px);
+  font-family: var(--display);
+  letter-spacing: 0.05em;
+}
+
+.pronunciation-meaning {
+  font-size: clamp(11px, 1vw, 13px);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.pronunciation-tagline {
+  font-family: var(--display);
+  font-size: clamp(24px, 3vw, 40px);
+  margin-left: auto;
+  color: var(--acid);
+}
+
+/* SERVICES */
+.services-grid {
+  margin-top: clamp(40px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.service-card {
+  border: 1px solid rgba(240, 234, 214, 0.15);
+  padding: clamp(24px, 3vw, 48px);
+  transition: border-color 0.3s, background 0.3s;
+  min-height: clamp(200px, 22vw, 320px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.service-card:hover {
+  border-color: var(--acid);
+  background: rgba(232, 255, 0, 0.03);
+}
+
+.service-number {
+  font-family: var(--display);
+  font-size: clamp(48px, 5vw, 80px);
+  opacity: 0.15;
+  line-height: 1;
+}
+
+.service-name {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.5vw, 36px);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.service-desc {
+  font-size: clamp(10px, 0.9vw, 12px);
+  opacity: 0.4;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+/* PROPERTIES GRID */
+.properties-grid {
+  margin-top: clamp(40px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.property-card {
+  border: 1px solid rgba(240, 234, 214, 0.2);
+  padding: clamp(24px, 3vw, 48px);
+  transition: border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: clamp(180px, 20vw, 280px);
+}
+
+.property-card:hover {
+  border-color: var(--acid);
+}
+
+.property-card:nth-child(3) {
+  grid-column: 1 / 2;
+}
+
+.property-card:nth-child(4) {
+  grid-column: 2 / 3;
+  grid-row: 2 / 4;
+  min-height: clamp(200px, 25vw, 400px);
+}
+
+.property-card:nth-child(5) {
+  grid-column: 1 / 2;
+}
+
+.property-name {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.property-tag {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.3;
+  margin-top: 8px;
+}
+
+.property-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.property-desc {
+  font-size: clamp(11px, 1vw, 13px);
+  opacity: 0.5;
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+.property-arrow {
+  font-size: 20px;
+  transition: transform 0.3s, color 0.3s;
+  opacity: 0.5;
+}
+
+.property-card:hover .property-arrow {
+  transform: translateX(4px);
+  color: var(--acid);
+  opacity: 1;
+}
+
+/* ABOUT */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 120px);
+  align-items: start;
+}
+
+.about-headline {
+  font-family: var(--display);
+  font-size: clamp(36px, 6vw, 90px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.about-body {
+  font-size: clamp(12px, 1.1vw, 15px);
+  line-height: 1.8;
+  opacity: 0.6;
+  max-width: 480px;
+  padding-top: 12px;
+}
+
+/* NUMBERS */
+.numbers {
+  display: flex;
+  padding: clamp(40px, 5vw, 80px) clamp(24px, 5vw, 80px);
+}
+
+.number-item {
+  flex: 1;
+  text-align: center;
+  padding: clamp(20px, 3vw, 40px) 0;
+}
+
+.number-item:not(:last-child) {
+  border-right: 1px solid rgba(240, 234, 214, 0.2);
+}
+
+.number-value {
+  font-family: var(--display);
+  font-size: clamp(32px, 5vw, 72px);
+  letter-spacing: -0.02em;
+}
+
+.number-label {
+  font-size: clamp(9px, 0.9vw, 11px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-top: 8px;
+}
+
+/* CREATORS */
+.creators-list {
+  margin-top: clamp(40px, 5vw, 80px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.creator-item {
+  font-family: var(--display);
+  font-size: clamp(24px, 4vw, 56px);
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border: 1px solid rgba(240, 234, 214, 0.1);
+  transition: border-color 0.3s, color 0.3s;
+  line-height: 1.1;
+}
+
+.creator-item:hover {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
+/* TEAM */
+.team-grid {
+  margin-top: clamp(40px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.team-card {
+  border: 1px solid rgba(240, 234, 214, 0.12);
+  padding: clamp(24px, 3vw, 48px);
+  transition: border-color 0.3s;
+  min-height: clamp(180px, 18vw, 260px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.team-card:hover {
+  border-color: var(--acid);
+}
+
+.team-initials {
+  font-family: var(--display);
+  font-size: clamp(48px, 5vw, 80px);
+  opacity: 0.12;
+  line-height: 1;
+}
+
+.team-name {
+  font-family: var(--display);
+  font-size: clamp(20px, 2.5vw, 32px);
+  text-transform: uppercase;
+}
+
+.team-role {
+  font-size: clamp(10px, 0.9vw, 12px);
+  opacity: 0.4;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* BLOGS */
+.blog-grid {
+  margin-top: clamp(40px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.blog-card {
+  border: 1px solid rgba(240, 234, 214, 0.12);
+  padding: clamp(24px, 3vw, 40px);
+  transition: border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: clamp(200px, 20vw, 300px);
+}
+
+.blog-card:hover {
+  border-color: var(--acid);
+}
+
+.blog-tag {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.blog-title {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.5vw, 36px);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-top: 16px;
+}
+
+.blog-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.blog-date {
+  font-size: 10px;
+  opacity: 0.3;
+  letter-spacing: 0.1em;
+}
+
+.blog-arrow {
+  font-size: 18px;
+  opacity: 0.4;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.blog-card:hover .blog-arrow {
+  transform: translateX(4px);
+  color: var(--acid);
+  opacity: 1;
+}
+
+/* CTA SECTION */
+.cta-section {
+  text-align: center;
+  padding: clamp(80px, 12vw, 160px) clamp(24px, 5vw, 80px);
+}
+
+.cta-headline {
+  font-family: var(--display);
+  font-size: clamp(40px, 8vw, 120px);
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.cta-sub {
+  margin-top: 24px;
+  font-size: clamp(12px, 1.1vw, 15px);
+  opacity: 0.5;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.cta-buttons {
+  margin-top: 48px;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.1vw, 14px);
+  padding: 16px 40px;
+  border: 1px solid var(--cream);
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.cta-btn:hover {
+  background: var(--acid);
+  color: var(--black);
+  border-color: var(--acid);
+}
+
+.cta-btn--primary {
+  background: var(--cream);
+  color: var(--black);
+}
+
+.cta-btn--primary:hover {
+  background: var(--acid);
+  border-color: var(--acid);
+}
+
+/* CAREERS */
+.careers-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(40px, 5vw, 80px) clamp(24px, 5vw, 80px);
+}
+
+.careers-left {
+  max-width: 60%;
+}
+
+.careers-title {
+  font-family: var(--display);
+  font-size: clamp(32px, 5vw, 72px);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.careers-body {
+  font-size: clamp(11px, 1vw, 13px);
+  opacity: 0.5;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.careers-link {
+  font-size: clamp(13px, 1.2vw, 16px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+  padding-bottom: 2px;
+}
+
+.careers-link:hover {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
+/* FOOTER */
+.footer {
+  padding: clamp(40px, 5vw, 80px) clamp(24px, 5vw, 80px);
+  padding-bottom: 24px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: clamp(40px, 5vw, 80px);
+}
+
+.footer-brand {
+  font-family: var(--display);
+  font-size: clamp(32px, 5vw, 64px);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.footer-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-link {
+  font-size: clamp(12px, 1.1vw, 15px);
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.footer-link:hover {
+  opacity: 1;
+}
+
+.footer-cta {
+  font-size: clamp(14px, 1.4vw, 18px);
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+  padding-bottom: 2px;
+}
+
+.footer-cta:hover {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  justify-content: flex-end;
+}
+
+.footer-socials a {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.footer-socials a:hover {
+  opacity: 1;
+  color: var(--acid);
+}
+
+.footer-bottom {
+  font-size: 11px;
+  opacity: 0.3;
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(240, 234, 214, 0.1);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+
+  .manifesto {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .properties-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .property-card:nth-child(3),
+  .property-card:nth-child(4),
+  .property-card:nth-child(5) {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 180px;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .numbers {
+    flex-direction: column;
+  }
+
+  .number-item:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid rgba(240, 234, 214, 0.2);
+  }
+
+  .pronunciation {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .pronunciation-tagline {
+    margin-left: 0;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .careers-strip {
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .careers-left {
+    max-width: 100%;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+
+  .footer-socials {
+    justify-content: flex-start;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">बना<span style="color: var(--acid)">ओ</span></div>
+  <ul class="nav-links">
+    <li><a href="#services" data-hover>Services</a></li>
+    <li><a href="#ips" data-hover>IPs</a></li>
+    <li><a href="#about" data-hover>About</a></li>
+    <li><a href="#team" data-hover>Team</a></li>
+    <li><a href="#blog" data-hover>Blog</a></li>
+    <li><a href="#contact" data-hover>Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-headline">
+    <div class="reveal">WE BUILD</div>
+    <div class="reveal reveal-d1">MEDIA THAT</div>
+    <div class="reveal reveal-d2">MOVES.</div>
+  </h1>
+  <p class="hero-sub reveal reveal-d3">We understand how content works. 35M+ views. 5 IPs. One studio.<span class="blink"> |</span></p>
+  <p class="hero-tagline reveal reveal-d4">Contact us for marketing your company using content</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>BREAKITFIRST</span><span>&middot;</span>
+    <span>FOUNDERSCULT</span><span>&middot;</span>
+    <span>THEBUSINESSFLOOR</span><span>&middot;</span>
+    <span>SPORTOLOGY</span><span>&middot;</span>
+    <span>NEWSLENS</span><span>&middot;</span>
+    <span>LET'S BANAO IT</span><span>&middot;</span>
+    <span>BREAKITFIRST</span><span>&middot;</span>
+    <span>FOUNDERSCULT</span><span>&middot;</span>
+    <span>THEBUSINESSFLOOR</span><span>&middot;</span>
+    <span>SPORTOLOGY</span><span>&middot;</span>
+    <span>NEWSLENS</span><span>&middot;</span>
+    <span>LET'S BANAO IT</span><span>&middot;</span>
+    <span>BREAKITFIRST</span><span>&middot;</span>
+    <span>FOUNDERSCULT</span><span>&middot;</span>
+    <span>THEBUSINESSFLOOR</span><span>&middot;</span>
+    <span>SPORTOLOGY</span><span>&middot;</span>
+    <span>NEWSLENS</span><span>&middot;</span>
+    <span>LET'S BANAO IT</span><span>&middot;</span>
+    <span>BREAKITFIRST</span><span>&middot;</span>
+    <span>FOUNDERSCULT</span><span>&middot;</span>
+    <span>THEBUSINESSFLOOR</span><span>&middot;</span>
+    <span>SPORTOLOGY</span><span>&middot;</span>
+    <span>NEWSLENS</span><span>&middot;</span>
+    <span>LET'S BANAO IT</span><span>&middot;</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MANIFESTO / WHO WE ARE -->
+<section class="section">
+  <div class="manifesto scroll-reveal">
+    <div class="manifesto-left">
+      <p class="section-label">Who we are</p>
+      <h2 class="section-title">WE UNDERSTAND HOW CONTENT WORKS.</h2>
+    </div>
+    <ul class="manifesto-points">
+      <li>Worked with 50+ brands across industries</li>
+      <li>Built and operate 5 high-reach Instagram IP pages</li>
+      <li>35M+ combined organic views &mdash; zero paid promotion</li>
+      <li>Content-first marketing for companies that want to own their narrative</li>
+      <li>Bengaluru-based. Internet-native. Audience-obsessed.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRONUNCIATION -->
+<section class="pronunciation scroll-reveal">
+  <div class="pronunciation-hindi">&#2348;&#2344;&#2366;<span style="color: var(--acid)">&#2323;</span></div>
+  <div class="pronunciation-detail">
+    <div class="pronunciation-phonetic">BUH-NAA-OH</div>
+    <div class="pronunciation-meaning">Hindi &mdash; verb &mdash; "to make, to build, to create"</div>
+  </div>
+  <div class="pronunciation-tagline">"LET'S BANAO IT"</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <p class="section-label scroll-reveal">What we do</p>
+  <h2 class="section-title scroll-reveal">SERVICES</h2>
+  <div class="services-grid scroll-reveal">
+    <div class="service-card" data-hover>
+      <div class="service-number">01</div>
+      <div>
+        <div class="service-name">INFLUENCER MARKETING</div>
+        <div class="service-desc">End-to-end influencer campaigns. We find the creators, brief them, run the campaign, and report the numbers. No fluff.</div>
+      </div>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">02</div>
+      <div>
+        <div class="service-name">HIGH REACH IP PAGES</div>
+        <div class="service-desc">Need reach? Our owned IP pages deliver millions of organic impressions. Place your brand inside content people actually follow.</div>
+      </div>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">03</div>
+      <div>
+        <div class="service-name">CUSTOM IP CREATION</div>
+        <div class="service-desc">We build new media brands from zero. Strategy, identity, content engine, growth &mdash; a fully owned IP designed around your audience.</div>
+      </div>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">04</div>
+      <div>
+        <div class="service-name">CONTENT MARKETING</div>
+        <div class="service-desc">Strategic content that compounds. We plan, produce, and distribute content that turns attention into brand equity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROPERTIES / OUR IPs -->
+<section class="section" id="ips">
+  <p class="section-label scroll-reveal">Our Instagram IPs</p>
+  <h2 class="section-title scroll-reveal">OUR IPs</h2>
+  <div class="properties-grid scroll-reveal">
+    <div class="property-card" data-hover>
+      <div>
+        <div class="property-name">BREAKITFIRST</div>
+        <div class="property-tag">News</div>
+      </div>
+      <div class="property-bottom">
+        <div class="property-desc">Breaking news before it breaks you. Speed-first reporting.</div>
+        <div class="property-arrow">&rarr;</div>
+      </div>
+    </div>
+    <div class="property-card" data-hover>
+      <div>
+        <div class="property-name">FOUNDERSCULT</div>
+        <div class="property-tag">Founder Community</div>
+      </div>
+      <div class="property-bottom">
+        <div class="property-desc">Raw stories from founders who build in the trenches.</div>
+        <div class="property-arrow">&rarr;</div>
+      </div>
+    </div>
+    <div class="property-card" data-hover>
+      <div>
+        <div class="property-name">THEBUSINESS<wbr>FLOOR</div>
+        <div class="property-tag">Business</div>
+      </div>
+      <div class="property-bottom">
+        <div class="property-desc">Business decoded. No fluff, no jargon, no mercy.</div>
+        <div class="property-arrow">&rarr;</div>
+      </div>
+    </div>
+    <div class="property-card" data-hover>
+      <div>
+        <div class="property-name">SPORTOLOGY</div>
+        <div class="property-tag">Sports</div>
+      </div>
+      <div class="property-bottom">
+        <div class="property-desc">The science of sport. Data meets adrenaline.</div>
+        <div class="property-arrow">&rarr;</div>
+      </div>
+    </div>
+    <div class="property-card" data-hover>
+      <div>
+        <div class="property-name">NEWSLENS</div>
+        <div class="property-tag">Media Lens</div>
+      </div>
+      <div class="property-bottom">
+        <div class="property-desc">One story. Multiple lenses. Context over clickbait.</div>
+        <div class="property-arrow">&rarr;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <p class="section-label scroll-reveal">About</p>
+  <div class="about scroll-reveal">
+    <div class="about-headline">WE DON'T MAKE CONTENT.<br>WE BUILD AUDIENCES.</div>
+    <div class="about-body">Banao Studios is a Bengaluru-based content studio turning cultural obsessions into owned intellectual property. We don't chase algorithms &mdash; we build brands that audiences choose to follow.<br><br>We started with one page and a belief: if you understand what moves people, you can build media that lasts. Five properties and 35 million views later, that belief is our business model.<br><br>Zero outside funding. Every view earned. Every IP owned.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NUMBERS -->
+<section class="numbers">
+  <div class="number-item scroll-reveal">
+    <div class="number-value">35M+</div>
+    <div class="number-label">Combined Views</div>
+  </div>
+  <div class="number-item scroll-reveal">
+    <div class="number-value">50+</div>
+    <div class="number-label">Brands Worked With</div>
+  </div>
+  <div class="number-item scroll-reveal">
+    <div class="number-value">5</div>
+    <div class="number-label">Active IPs</div>
+  </div>
+  <div class="number-item scroll-reveal">
+    <div class="number-value">0</div>
+    <div class="number-label">VC Money</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CREATORS WE'VE WORKED WITH -->
+<section class="section">
+  <p class="section-label scroll-reveal">Collaborations</p>
+  <h2 class="section-title scroll-reveal">CREATORS WE'VE WORKED WITH</h2>
+  <div class="creators-list scroll-reveal">
+    <div class="creator-item" data-hover>CREATOR 01</div>
+    <div class="creator-item" data-hover>CREATOR 02</div>
+    <div class="creator-item" data-hover>CREATOR 03</div>
+    <div class="creator-item" data-hover>CREATOR 04</div>
+    <div class="creator-item" data-hover>CREATOR 05</div>
+    <div class="creator-item" data-hover>CREATOR 06</div>
+    <div class="creator-item" data-hover>CREATOR 07</div>
+    <div class="creator-item" data-hover>CREATOR 08</div>
+  </div>
+  <p style="margin-top: 24px; font-size: 11px; opacity: 0.3; letter-spacing: 0.2em; text-transform: uppercase;">Replace with actual creator/influencer names</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <p class="section-label scroll-reveal">The people</p>
+  <h2 class="section-title scroll-reveal">OUR TEAM</h2>
+  <div class="team-grid scroll-reveal">
+    <div class="team-card" data-hover>
+      <div class="team-initials">SK</div>
+      <div>
+        <div class="team-name">MEMBER NAME</div>
+        <div class="team-role">Founder &amp; CEO</div>
+      </div>
+    </div>
+    <div class="team-card" data-hover>
+      <div class="team-initials">AB</div>
+      <div>
+        <div class="team-name">MEMBER NAME</div>
+        <div class="team-role">Content Lead</div>
+      </div>
+    </div>
+    <div class="team-card" data-hover>
+      <div class="team-initials">CD</div>
+      <div>
+        <div class="team-name">MEMBER NAME</div>
+        <div class="team-role">Growth &amp; Strategy</div>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top: 24px; font-size: 11px; opacity: 0.3; letter-spacing: 0.2em; text-transform: uppercase;">Replace with actual team member details</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- BLOG -->
+<section class="section" id="blog">
+  <p class="section-label scroll-reveal">Insights</p>
+  <h2 class="section-title scroll-reveal">BLOG</h2>
+  <div class="blog-grid scroll-reveal">
+    <a href="#" class="blog-card" data-hover>
+      <div>
+        <div class="blog-tag">Content Strategy</div>
+        <div class="blog-title">WHY OWNED MEDIA BEATS RENTED AUDIENCES</div>
+      </div>
+      <div class="blog-bottom">
+        <div class="blog-date">2026.06.01</div>
+        <div class="blog-arrow">&rarr;</div>
+      </div>
+    </a>
+    <a href="#" class="blog-card" data-hover>
+      <div>
+        <div class="blog-tag">IP Building</div>
+        <div class="blog-title">FROM ZERO TO 10M VIEWS: BUILDING BREAKITFIRST</div>
+      </div>
+      <div class="blog-bottom">
+        <div class="blog-date">2026.05.18</div>
+        <div class="blog-arrow">&rarr;</div>
+      </div>
+    </a>
+    <a href="#" class="blog-card" data-hover>
+      <div>
+        <div class="blog-tag">Influencer Marketing</div>
+        <div class="blog-title">THE DEATH OF VANITY METRICS</div>
+      </div>
+      <div class="blog-bottom">
+        <div class="blog-date">2026.05.04</div>
+        <div class="blog-arrow">&rarr;</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA / SCHEDULE MEETING -->
+<section class="cta-section" id="contact">
+  <p class="section-label scroll-reveal">Let's talk</p>
+  <h2 class="cta-headline scroll-reveal">MARKET YOUR COMPANY<br>USING CONTENT.</h2>
+  <p class="cta-sub scroll-reveal">Schedule a meeting with our team. Whether it's influencer campaigns, IP creation, or content strategy &mdash; we'll figure out what moves your audience.</p>
+  <div class="cta-buttons scroll-reveal">
+    <a href="mailto:hello@banaostudios.com" class="cta-btn cta-btn--primary" data-hover>SCHEDULE A MEETING</a>
+    <a href="mailto:hello@banaostudios.com" class="cta-btn" data-hover>GET IN TOUCH &rarr;</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CAREERS -->
+<section class="careers-strip scroll-reveal">
+  <div class="careers-left">
+    <div class="careers-title">CAREERS AT BANAO</div>
+    <p class="careers-body">We're building the next generation of media. If you think in content, breathe culture, and ship fast &mdash; we want to hear from you.</p>
+  </div>
+  <a href="mailto:careers@banaostudios.com" class="careers-link" data-hover>VIEW OPENINGS &rarr;</a>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">BANAO STUDIOS</div>
+    <div class="footer-right">
+      <a href="mailto:hello@banaostudios.com" class="footer-cta" data-hover>GET IN TOUCH &rarr;</a>
+      <div class="footer-socials">
+        <a href="#" data-hover>Instagram</a>
+        <a href="#" data-hover>Twitter</a>
+        <a href="#" data-hover>LinkedIn</a>
+        <a href="#" data-hover>YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 BANAO STUDIOS. BENGALURU, INDIA.</span>
+    <span>banaostudios.com</span>
+  </div>
+</footer>
+
+<script>
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+setTimeout(() => {
+  document.querySelectorAll('.scroll-reveal:not(.visible)').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) el.classList.add('visible');
+  });
+}, 100);
+
+// Smooth scroll for nav
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', e => {
+    const href = link.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
