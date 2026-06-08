@@ -110,8 +110,8 @@ body::after {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   padding: 0 clamp(24px, 5vw, 80px);
   padding-bottom: 80px;
 }
@@ -164,8 +164,6 @@ body::after {
   opacity: 0;
   max-width: 550px;
   animation: fadeIn 0.8s ease 1.1s forwards;
-  text-align: left;
-  align-self: flex-start;
 }
 
 .hero-cta {
@@ -175,7 +173,6 @@ body::after {
   flex-wrap: wrap;
   opacity: 0;
   animation: fadeIn 0.8s ease 1.4s forwards;
-  align-self: flex-start;
 }
 
 .btn {
