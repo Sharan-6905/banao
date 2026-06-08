@@ -62,9 +62,11 @@ a {
 
 .nav-brand {
   font-family: var(--display);
-  font-size: 28px;
+  font-size: 32px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-weight: 900;
+  -webkit-text-stroke: 1.5px var(--cream);
 }
 
 .nav-tag {
@@ -212,6 +214,52 @@ a {
   margin-top: 6px;
 }
 
+/* TEAM */
+.team {
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px);
+  border-top: 1px solid rgba(240, 234, 214, 0.1);
+}
+
+.team-label {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+.team-title {
+  font-family: var(--display);
+  font-size: clamp(36px, 6vw, 72px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.team-member {
+  flex: 1 1 180px;
+  border: 1px solid rgba(240, 234, 214, 0.12);
+  padding: clamp(20px, 2.5vw, 36px);
+  transition: border-color 0.3s;
+}
+
+.team-member:hover {
+  border-color: var(--orange);
+}
+
+.team-member-name {
+  font-family: var(--display);
+  font-size: clamp(20px, 2.5vw, 32px);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
 /* FOOTER */
 .footer {
   padding: 20px clamp(24px, 5vw, 80px);
@@ -286,9 +334,9 @@ a {
       <span class="accent">BIG</span> IS<br>
       COMING.
     </h1>
-    <p class="hero-sub">We build media that moves. 5 owned IPs, 35M+ views, and a studio that turns cultural obsessions into audiences. We're getting ready to show you everything.</p>
+    <p class="hero-sub">Banao Studios is a content-first media company that produces original content, runs influencer marketing campaigns, and manages multiple owned Instagram IP pages with 35M+ combined views. They handle end-to-end social media strategy and content marketing for brands across industries. Think of them as a creative studio that both builds their own media properties and helps other brands grow through content.</p>
     <div class="hero-cta">
-      <a href="https://cal.com/dhruv-pradeep-ykosw1/30min" target="_blank" class="btn btn--primary">SCHEDULE A CALL</a>
+      <a href="mailto:collab@banaostudios.com" target="_blank" class="btn btn--primary">SCHEDULE A CALL</a>
       <a href="mailto:hello@banaostudios.com" class="btn">GET IN TOUCH &rarr;</a>
     </div>
   </section>
@@ -296,26 +344,49 @@ a {
   <!-- MARQUEE -->
   <div class="marquee-wrap">
     <div class="marquee-track">
-      <span>BREAKITFIRST</span><span>&middot;</span>
-      <span>FOUNDERSCULT</span><span>&middot;</span>
-      <span>THEBUSINESSFLOOR</span><span>&middot;</span>
-      <span>SPORTOLOGY</span><span>&middot;</span>
-      <span>NEWSLENS</span><span>&middot;</span>
+      <span>CONTENT THAT MOVES</span><span>&middot;</span>
+      <span>35M+ VIEWS</span><span>&middot;</span>
+      <span>INFLUENCER MARKETING</span><span>&middot;</span>
+      <span>OWNED IP PAGES</span><span>&middot;</span>
+      <span>SOCIAL MEDIA STRATEGY</span><span>&middot;</span>
       <span>LET'S BANAO IT</span><span>&middot;</span>
-      <span>BREAKITFIRST</span><span>&middot;</span>
-      <span>FOUNDERSCULT</span><span>&middot;</span>
-      <span>THEBUSINESSFLOOR</span><span>&middot;</span>
-      <span>SPORTOLOGY</span><span>&middot;</span>
-      <span>NEWSLENS</span><span>&middot;</span>
+
+      <span>CONTENT MARKETING</span><span>&middot;</span>
+      <span>BRAND GROWTH</span><span>&middot;</span>
+      <span>CONTENT THAT MOVES</span><span>&middot;</span>
+      <span>35M+ VIEWS</span><span>&middot;</span>
+      <span>INFLUENCER MARKETING</span><span>&middot;</span>
+      <span>OWNED IP PAGES</span><span>&middot;</span>
+      <span>SOCIAL MEDIA STRATEGY</span><span>&middot;</span>
       <span>LET'S BANAO IT</span><span>&middot;</span>
-      <span>BREAKITFIRST</span><span>&middot;</span>
-      <span>FOUNDERSCULT</span><span>&middot;</span>
-      <span>THEBUSINESSFLOOR</span><span>&middot;</span>
-      <span>SPORTOLOGY</span><span>&middot;</span>
-      <span>NEWSLENS</span><span>&middot;</span>
-      <span>LET'S BANAO IT</span><span>&middot;</span>
+
+      <span>CONTENT MARKETING</span><span>&middot;</span>
+      <span>BRAND GROWTH</span><span>&middot;</span>
     </div>
   </div>
+
+  <!-- TEAM -->
+  <section class="team">
+    <p class="team-label">The people behind Banao</p>
+    <h2 class="team-title">OUR TEAM</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="team-member-name">DHRUV PRADEEP</div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-name">SANCHITH</div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-name">SUNITA</div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-name">DEEKSHAA</div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-name">MUKUNDHAN</div>
+      </div>
+    </div>
+  </section>
 
   <!-- STATS -->
   <section class="stats">
@@ -341,9 +412,8 @@ a {
   <footer class="footer">
     <span>&copy; 2026 BANAO STUDIOS. BENGALURU.</span>
     <div class="footer-socials">
-      <a href="#">Instagram</a>
-      <a href="#">Twitter</a>
-      <a href="#">LinkedIn</a>
+      <a href="https://www.instagram.com/banaostudios?igsh=MXV4MXpmeXp0NHNkbQ==" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/company/banao-studios/" target="_blank">LinkedIn</a>
     </div>
   </footer>
 
