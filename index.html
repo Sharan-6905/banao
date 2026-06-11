@@ -22,6 +22,10 @@
   --display: 'Bebas Neue', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   height: 100%;
 }
@@ -60,8 +64,23 @@ body::after {
   background-size: 128px 128px;
 }
 
+/* ============================
+   INTERACTIVE PARTICLE CANVAS
+   ============================ */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* LAYOUT */
 .page {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -75,6 +94,14 @@ body::after {
   padding: 24px clamp(24px, 5vw, 80px);
   border-bottom: 1px solid rgba(240, 234, 214, 0.1);
   animation: fadeDown 0.6s ease both;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .nav-brand {
@@ -84,6 +111,68 @@ body::after {
   letter-spacing: 0.05em;
   font-weight: 900;
   -webkit-text-stroke: 1.5px var(--cream);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* SOUND TOGGLE */
+.sound-toggle {
+  background: none;
+  border: 1px solid rgba(240, 234, 214, 0.2);
+  color: var(--cream);
+  cursor: pointer;
+  padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.sound-toggle:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.sound-toggle.active {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.sound-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-bar {
+  width: 2px;
+  background: currentColor;
+  transition: height 0.2s;
+}
+
+.sound-toggle:not(.active) .sound-bar {
+  height: 2px !important;
+}
+
+.sound-toggle.active .sound-bar:nth-child(1) { animation: soundWave 0.8s ease-in-out infinite; }
+.sound-toggle.active .sound-bar:nth-child(2) { animation: soundWave 0.8s ease-in-out 0.15s infinite; }
+.sound-toggle.active .sound-bar:nth-child(3) { animation: soundWave 0.8s ease-in-out 0.3s infinite; }
+.sound-toggle.active .sound-bar:nth-child(4) { animation: soundWave 0.8s ease-in-out 0.45s infinite; }
+
+@keyframes soundWave {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; }
 }
 
 .nav-tag {
@@ -183,7 +272,7 @@ body::after {
   text-transform: uppercase;
   opacity: 0;
   margin-bottom: 24px;
-  animation: fadeIn 0.8s ease 0.3s forwards;
+  animation: fadeInFull 0.8s ease 0.3s forwards;
 }
 
 /* STAGGERED WORD REVEAL */
@@ -197,11 +286,13 @@ body::after {
   overflow: hidden;
 }
 
+/* MAGNETIC TEXT — headline words get magnetic class */
 .hero-headline .word {
   display: inline-block;
   opacity: 0;
   transform: translateY(100%);
   animation: wordReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: transform 0.15s ease-out;
 }
 
 .hero-headline .word:nth-child(1) { animation-delay: 0.4s; }
@@ -218,6 +309,20 @@ body::after {
   text-shadow: 0 0 40px rgba(255, 95, 0, 0.3);
 }
 
+/* GLITCH EFFECT ON HOVER */
+.hero-headline:hover .word {
+  animation: glitchText 0.3s ease;
+}
+
+@keyframes glitchText {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0); }
+}
+
 .hero-sub {
   margin-top: 32px;
   font-size: clamp(13px, 1.3vw, 17px);
@@ -227,21 +332,36 @@ body::after {
   animation: fadeIn 0.8s ease 1.1s forwards;
 }
 
+/* TYPEWRITER EFFECT for hero-sub */
+.hero-sub.typewriter-active {
+  border-right: 2px solid var(--orange);
+  animation: fadeIn 0.8s ease 1.1s forwards, cursorBlink 0.7s step-end infinite;
+}
+
+.hero-sub.typewriter-done {
+  border-right: none;
+}
+
+@keyframes cursorBlink {
+  50% { border-color: transparent; }
+}
+
 .hero-cta {
   margin-top: 48px;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fadeIn 0.8s ease 1.4s forwards;
+  animation: fadeInFull 0.8s ease 1.4s forwards;
 }
 
+/* MAGNETIC BUTTON */
 .btn {
   font-family: var(--mono);
   font-size: clamp(12px, 1.1vw, 14px);
   padding: 18px 44px;
   border: 1px solid var(--cream);
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   position: relative;
@@ -294,18 +414,347 @@ body::after {
   to { opacity: 0.5; transform: translateY(0); }
 }
 
-/* Override fadeIn for elements that should be full opacity */
-.hero-label {
-  animation: fadeInFull 0.8s ease 0.3s forwards;
-}
-
-.hero-cta {
-  animation: fadeInFull 0.8s ease 1.4s forwards;
-}
-
 @keyframes fadeInFull {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================
+   COUNTDOWN TIMER
+   ============================ */
+.countdown-section {
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px);
+  text-align: center;
+  border-top: 1px solid rgba(240, 234, 214, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-section::before {
+  content: 'LAUNCHING';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--display);
+  font-size: clamp(80px, 15vw, 220px);
+  color: rgba(240, 234, 214, 0.02);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+.countdown-label {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+.countdown-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 5vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+  flex-wrap: wrap;
+}
+
+.countdown-block {
+  min-width: clamp(80px, 12vw, 160px);
+  padding: clamp(16px, 2vw, 32px);
+  border: 1px solid rgba(240, 234, 214, 0.1);
+  position: relative;
+  transition: border-color 0.4s;
+}
+
+.countdown-block:hover {
+  border-color: var(--orange);
+}
+
+.countdown-block::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.countdown-block:hover::after {
+  transform: scaleX(1);
+}
+
+.countdown-number {
+  font-family: var(--display);
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  transition: color 0.3s;
+}
+
+.countdown-block:hover .countdown-number {
+  color: var(--orange);
+}
+
+.countdown-unit {
+  font-size: clamp(8px, 0.8vw, 10px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  margin-top: 8px;
+}
+
+/* ============================
+   EMAIL CAPTURE
+   ============================ */
+.email-section {
+  padding: clamp(48px, 6vw, 80px) clamp(24px, 5vw, 80px);
+  text-align: center;
+  border-top: 1px solid rgba(240, 234, 214, 0.1);
+  position: relative;
+}
+
+.email-label {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+.email-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 5vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.email-subtitle {
+  font-size: clamp(11px, 1vw, 14px);
+  opacity: 0.4;
+  margin-bottom: clamp(24px, 3vw, 40px);
+  letter-spacing: 0.05em;
+}
+
+.email-form {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  max-width: 560px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.email-input {
+  flex: 1;
+  padding: 18px 24px;
+  background: transparent;
+  border: 1px solid rgba(240, 234, 214, 0.2);
+  border-right: none;
+  color: var(--cream);
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.1vw, 14px);
+  letter-spacing: 0.05em;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.email-input::placeholder {
+  color: rgba(240, 234, 214, 0.25);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: clamp(10px, 0.9vw, 12px);
+}
+
+.email-input:focus {
+  border-color: var(--orange);
+}
+
+.email-submit {
+  padding: 18px 32px;
+  background: var(--cream);
+  color: var(--black);
+  border: 1px solid var(--cream);
+  font-family: var(--mono);
+  font-size: clamp(10px, 0.9vw, 12px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.email-submit:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.email-success {
+  display: none;
+  padding: 18px;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+  font-size: clamp(11px, 1vw, 13px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.email-success.show {
+  display: block;
+  animation: fadeInFull 0.5s ease;
+}
+
+.email-note {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.2;
+  margin-top: 16px;
+}
+
+/* ============================
+   IP SHOWCASE CAROUSEL
+   ============================ */
+.ip-section {
+  padding: clamp(40px, 6vw, 80px) 0;
+  border-top: 1px solid rgba(240, 234, 214, 0.1);
+  overflow: hidden;
+}
+
+.ip-header {
+  padding: 0 clamp(24px, 5vw, 80px);
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.ip-label {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+.ip-title {
+  font-family: var(--display);
+  font-size: clamp(36px, 6vw, 72px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.ip-carousel {
+  display: flex;
+  gap: 2px;
+  animation: ipScroll 30s linear infinite;
+  width: max-content;
+}
+
+.ip-carousel:hover {
+  animation-play-state: paused;
+}
+
+.ip-card {
+  flex-shrink: 0;
+  width: clamp(280px, 22vw, 360px);
+  border: 1px solid rgba(240, 234, 214, 0.1);
+  padding: clamp(24px, 2.5vw, 40px);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.ip-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ip-card:hover::before {
+  transform: scaleX(1);
+}
+
+.ip-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(255, 95, 0, 0.08);
+}
+
+.ip-card-number {
+  font-family: var(--display);
+  font-size: clamp(48px, 5vw, 72px);
+  color: rgba(240, 234, 214, 0.04);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.ip-card-name {
+  font-family: var(--display);
+  font-size: clamp(24px, 2.5vw, 36px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.ip-card-niche {
+  font-size: clamp(9px, 0.8vw, 11px);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.ip-card-desc {
+  font-size: clamp(11px, 1vw, 13px);
+  line-height: 1.6;
+  opacity: 0.4;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.ip-card-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: clamp(12px, 1.5vw, 20px);
+  border-top: 1px solid rgba(240, 234, 214, 0.08);
+}
+
+.ip-card-stat-value {
+  font-family: var(--display);
+  font-size: clamp(20px, 2vw, 28px);
+}
+
+.ip-card-stat-label {
+  font-size: clamp(8px, 0.7vw, 9px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.3;
+}
+
+@keyframes ipScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* MARQUEE */
@@ -335,7 +784,9 @@ body::after {
   100% { transform: translateX(-50%); }
 }
 
-/* SCROLL REVEAL */
+/* ============================
+   CINEMATIC SCROLL REVEALS
+   ============================ */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -345,6 +796,52 @@ body::after {
 .scroll-reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Horizontal wipe — film slate style */
+.wipe-reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wipe-reveal.visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Scale-up reveal */
+.scale-reveal {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scale-reveal.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Slide from left */
+.slide-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide from right */
+.slide-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-right.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* TEAM */
@@ -382,6 +879,25 @@ body::after {
   transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
   opacity: 0;
   transform: translateY(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.team-member::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.team-member:hover::before {
+  transform: scaleX(1);
 }
 
 .team-member.visible {
@@ -402,10 +918,25 @@ body::after {
   line-height: 1.1;
 }
 
-/* STATS */
+/* STATS — parallax depth */
 .stats {
   display: flex;
   border-top: 1px solid rgba(240, 234, 214, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stats::before {
+  content: '35,000,000+';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--display);
+  font-size: clamp(80px, 15vw, 200px);
+  color: rgba(240, 234, 214, 0.015);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .stat {
@@ -512,17 +1043,58 @@ body::after {
     gap: 12px;
     text-align: center;
   }
+
+  .email-form {
+    flex-direction: column;
+  }
+
+  .email-input {
+    border-right: 1px solid rgba(240, 234, 214, 0.2);
+    border-bottom: none;
+  }
+
+  .countdown-grid {
+    gap: 8px;
+  }
+
+  .countdown-block {
+    min-width: 70px;
+  }
+
+  .sound-toggle span {
+    display: none;
+  }
+
+  .ip-card {
+    width: 260px;
+  }
 }
 </style>
 </head>
 <body>
 
+<!-- INTERACTIVE PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
 <div class="page">
 
   <!-- NAV -->
   <nav class="nav">
-    <div class="nav-brand">बना<span style="color: var(--orange)">ओ</span></div>
-    <div class="nav-tag">Coming Soon</div>
+    <div class="nav-left">
+      <div class="nav-brand">बना<span style="color: var(--orange)">ओ</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="sound-toggle" id="soundToggle" aria-label="Toggle ambient sound">
+        <div class="sound-bars">
+          <div class="sound-bar" style="height:3px"></div>
+          <div class="sound-bar" style="height:3px"></div>
+          <div class="sound-bar" style="height:3px"></div>
+          <div class="sound-bar" style="height:3px"></div>
+        </div>
+        <span>Sound</span>
+      </button>
+      <div class="nav-tag">Coming Soon</div>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -530,14 +1102,14 @@ body::after {
     <div class="hero-line-left"></div>
     <div class="hero-line-right"></div>
     <p class="hero-label">A content studio from Bengaluru</p>
-    <h1 class="hero-headline">
+    <h1 class="hero-headline" id="heroHeadline">
       <span class="word">SOMETHING</span><br>
       <span class="word"><span class="accent">BIG</span> IS</span><br>
       <span class="word">COMING.</span>
     </h1>
     <p class="hero-sub">Banao Studios is a content-first media company that produces original content, runs influencer marketing campaigns, and manages multiple owned Instagram IP pages with 35M+ combined views. They handle end-to-end social media strategy and content marketing for brands across industries. Think of them as a creative studio that both builds their own media properties and helps other brands grow through content.</p>
     <div class="hero-cta">
-      <a href="https://cal.com/banao-studios-udyo2p/30min" target="_blank" class="btn btn--primary">SCHEDULE A CALL</a>
+      <a href="https://cal.com/banao-studios-udyo2p/30min" target="_blank" class="btn btn--primary" id="ctaBtn">SCHEDULE A CALL</a>
     </div>
   </section>
 
@@ -563,13 +1135,160 @@ body::after {
     </div>
   </div>
 
+  <!-- COUNTDOWN -->
+  <section class="countdown-section scale-reveal">
+    <p class="countdown-label">Mark your calendar</p>
+    <h2 class="countdown-title">LAUNCHING IN</h2>
+    <div class="countdown-grid">
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-days">00</div>
+        <div class="countdown-unit">Days</div>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-hours">00</div>
+        <div class="countdown-unit">Hours</div>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-mins">00</div>
+        <div class="countdown-unit">Minutes</div>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-secs">00</div>
+        <div class="countdown-unit">Seconds</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANIMATED DIVIDER -->
+  <div class="divider-animated"></div>
+
+  <!-- EMAIL CAPTURE -->
+  <section class="email-section scale-reveal">
+    <p class="email-label">Be the first to know</p>
+    <h2 class="email-title">GET EARLY ACCESS</h2>
+    <p class="email-subtitle">Drop your email. We'll let you know when we go live.</p>
+    <form class="email-form" id="emailForm">
+      <input type="email" class="email-input" id="emailInput" placeholder="Your email address" required autocomplete="email">
+      <button type="submit" class="email-submit">NOTIFY ME</button>
+    </form>
+    <div class="email-success" id="emailSuccess">
+      ✓ You're on the list. We'll be in touch soon.
+    </div>
+    <p class="email-note">No spam. Just one email when we launch.</p>
+  </section>
+
+  <!-- ANIMATED DIVIDER -->
+  <div class="divider-animated"></div>
+
+  <!-- IP SHOWCASE -->
+  <section class="ip-section">
+    <div class="ip-header">
+      <p class="ip-label slide-left">Our media properties</p>
+      <h2 class="ip-title slide-left">OWNED IPs</h2>
+    </div>
+    <div class="ip-carousel" id="ipCarousel">
+      <!-- Set 1 -->
+      <div class="ip-card">
+        <div class="ip-card-number">01</div>
+        <div class="ip-card-name">BREAKITFIRST</div>
+        <div class="ip-card-niche">Breaking News</div>
+        <div class="ip-card-desc">First to break stories that matter. Raw, unfiltered news content for the digital generation.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">breakitfirst.io</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">02</div>
+        <div class="ip-card-name">FOUNDERSCULT</div>
+        <div class="ip-card-niche">Founder Community</div>
+        <div class="ip-card-desc">Stories of founders who build, break, and rebuild. The cult of entrepreneurship.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">@founderscult</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">03</div>
+        <div class="ip-card-name">THE BUSINESS FLOOR</div>
+        <div class="ip-card-niche">Business & Finance</div>
+        <div class="ip-card-desc">Business breakdowns, market moves, and financial literacy made accessible.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">thebusinessfloor.io</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">04</div>
+        <div class="ip-card-name">SPORTOLOGY.HQ</div>
+        <div class="ip-card-niche">Sports & Culture</div>
+        <div class="ip-card-desc">Where sports meets storytelling. Data-driven takes, emotional narratives.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">@sportology.hq</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">05</div>
+        <div class="ip-card-name">NEWSLENS</div>
+        <div class="ip-card-niche">Media Lens</div>
+        <div class="ip-card-desc">A fresh lens on media, pop culture, and the stories behind the stories.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">newslens.io</div>
+        </div>
+      </div>
+      <!-- Set 2 (duplicate for infinite scroll) -->
+      <div class="ip-card">
+        <div class="ip-card-number">01</div>
+        <div class="ip-card-name">BREAKITFIRST</div>
+        <div class="ip-card-niche">Breaking News</div>
+        <div class="ip-card-desc">First to break stories that matter. Raw, unfiltered news content for the digital generation.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">breakitfirst.io</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">02</div>
+        <div class="ip-card-name">FOUNDERSCULT</div>
+        <div class="ip-card-niche">Founder Community</div>
+        <div class="ip-card-desc">Stories of founders who build, break, and rebuild. The cult of entrepreneurship.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">@founderscult</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">03</div>
+        <div class="ip-card-name">THE BUSINESS FLOOR</div>
+        <div class="ip-card-niche">Business & Finance</div>
+        <div class="ip-card-desc">Business breakdowns, market moves, and financial literacy made accessible.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">thebusinessfloor.io</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">04</div>
+        <div class="ip-card-name">SPORTOLOGY.HQ</div>
+        <div class="ip-card-niche">Sports & Culture</div>
+        <div class="ip-card-desc">Where sports meets storytelling. Data-driven takes, emotional narratives.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">@sportology.hq</div>
+        </div>
+      </div>
+      <div class="ip-card">
+        <div class="ip-card-number">05</div>
+        <div class="ip-card-name">NEWSLENS</div>
+        <div class="ip-card-niche">Media Lens</div>
+        <div class="ip-card-desc">A fresh lens on media, pop culture, and the stories behind the stories.</div>
+        <div class="ip-card-stat">
+          <div class="ip-card-stat-value">newslens.io</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ANIMATED DIVIDER -->
   <div class="divider-animated"></div>
 
   <!-- TEAM -->
   <section class="team">
-    <p class="team-label scroll-reveal">The people behind Banao</p>
-    <h2 class="team-title scroll-reveal">OUR TEAM</h2>
+    <p class="team-label slide-left">The people behind Banao</p>
+    <h2 class="team-title slide-left">OUR TEAM</h2>
     <div class="team-grid">
       <div class="team-member">
         <div class="team-member-name">DHRUV PRADEEP</div>
@@ -624,18 +1343,364 @@ body::after {
 </div>
 
 <script>
-// Intersection Observer for scroll reveals
-const observer = new IntersectionObserver(entries => {
+// ============================
+// 1. INTERACTIVE PARTICLE CANVAS
+// ============================
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: -1000, y: -1000 };
+const PARTICLE_COUNT = 80;
+const CONNECTION_DIST = 150;
+const MOUSE_RADIUS = 200;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function initParticles() {
+  particles = [];
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      size: Math.random() * 2 + 1,
+      baseAlpha: Math.random() * 0.15 + 0.05
+    });
+  }
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+
+    // Move
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // Wrap
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+
+    // Distance from mouse
+    const dx = mouse.x - p.x;
+    const dy = mouse.y - p.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    // Glow near cursor
+    let alpha = p.baseAlpha;
+    let color = '240, 234, 214';
+    let size = p.size;
+
+    if (dist < MOUSE_RADIUS) {
+      const intensity = 1 - dist / MOUSE_RADIUS;
+      alpha = p.baseAlpha + intensity * 0.6;
+      color = `${240 + 15 * intensity}, ${234 - 139 * intensity}, ${214 - 214 * intensity}`;
+      size = p.size + intensity * 3;
+
+      // Gentle push away from cursor
+      const angle = Math.atan2(dy, dx);
+      p.vx -= Math.cos(angle) * intensity * 0.15;
+      p.vy -= Math.sin(angle) * intensity * 0.15;
+    }
+
+    // Dampen velocity
+    p.vx *= 0.99;
+    p.vy *= 0.99;
+
+    // Draw particle
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${color}, ${alpha})`;
+    ctx.fill();
+
+    // Draw connections
+    for (let j = i + 1; j < particles.length; j++) {
+      const p2 = particles[j];
+      const cdx = p.x - p2.x;
+      const cdy = p.y - p2.y;
+      const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+
+      if (cdist < CONNECTION_DIST) {
+        const lineAlpha = (1 - cdist / CONNECTION_DIST) * 0.08;
+
+        // Brighten connections near mouse
+        const midX = (p.x + p2.x) / 2;
+        const midY = (p.y + p2.y) / 2;
+        const mDist = Math.sqrt((mouse.x - midX) ** 2 + (mouse.y - midY) ** 2);
+        const isNearMouse = mDist < MOUSE_RADIUS;
+
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.strokeStyle = isNearMouse
+          ? `rgba(255, 95, 0, ${lineAlpha * 3})`
+          : `rgba(240, 234, 214, ${lineAlpha})`;
+        ctx.lineWidth = isNearMouse ? 0.8 : 0.4;
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(drawParticles);
+}
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  initParticles();
+});
+
+document.addEventListener('mousemove', (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+document.addEventListener('mouseleave', () => {
+  mouse.x = -1000;
+  mouse.y = -1000;
+});
+
+resizeCanvas();
+initParticles();
+drawParticles();
+
+
+// ============================
+// 2. COUNTDOWN TIMER
+// ============================
+// Set launch date — 30 days from now (update this to your actual launch date)
+const LAUNCH_DATE = new Date();
+LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
+LAUNCH_DATE.setHours(0, 0, 0, 0);
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = LAUNCH_DATE - now;
+
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+// ============================
+// 3. EMAIL CAPTURE (Frontend)
+// ============================
+const emailForm = document.getElementById('emailForm');
+const emailInput = document.getElementById('emailInput');
+const emailSuccess = document.getElementById('emailSuccess');
+
+emailForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = emailInput.value.trim();
+  if (!email) return;
+
+  // TODO: Connect to Brevo API via serverless function
+  // Example: await fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email }) });
+
+  // For now, show success state
+  emailForm.style.display = 'none';
+  emailSuccess.classList.add('show');
+
+  // Store locally as fallback
+  try {
+    const stored = JSON.parse(localStorage.getItem('banao_emails') || '[]');
+    stored.push({ email, date: new Date().toISOString() });
+    localStorage.setItem('banao_emails', JSON.stringify(stored));
+  } catch(err) {}
+});
+
+
+// ============================
+// 4. MAGNETIC BUTTON EFFECT
+// ============================
+const ctaBtn = document.getElementById('ctaBtn');
+
+ctaBtn.addEventListener('mousemove', (e) => {
+  const rect = ctaBtn.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width / 2;
+  const y = e.clientY - rect.top - rect.height / 2;
+  ctaBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+});
+
+ctaBtn.addEventListener('mouseleave', () => {
+  ctaBtn.style.transform = 'translate(0, 0)';
+});
+
+
+// ============================
+// 5. MAGNETIC HEADLINE DISTORTION
+// ============================
+const headline = document.getElementById('heroHeadline');
+const words = headline.querySelectorAll('.word');
+
+headline.addEventListener('mousemove', (e) => {
+  const rect = headline.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  words.forEach((word, i) => {
+    const wordRect = word.getBoundingClientRect();
+    const wordCenterX = wordRect.left + wordRect.width / 2;
+    const wordCenterY = wordRect.top + wordRect.height / 2;
+
+    const dx = e.clientX - wordCenterX;
+    const dy = e.clientY - wordCenterY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const maxDist = 300;
+
+    if (dist < maxDist) {
+      const intensity = (1 - dist / maxDist) * 8;
+      word.style.transform = `translate(${dx / dist * intensity}px, ${dy / dist * intensity}px)`;
+    } else {
+      word.style.transform = 'translate(0, 0)';
+    }
+  });
+});
+
+headline.addEventListener('mouseleave', () => {
+  words.forEach(word => {
+    word.style.transform = 'translate(0, 0)';
+  });
+});
+
+
+// ============================
+// 6. AMBIENT SOUND (Web Audio API)
+// ============================
+let audioCtx = null;
+let isPlaying = false;
+let gainNode = null;
+let oscillators = [];
+
+function createAmbientSound() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  gainNode = audioCtx.createGain();
+  gainNode.gain.value = 0;
+  gainNode.connect(audioCtx.destination);
+
+  // Deep drone
+  const osc1 = audioCtx.createOscillator();
+  osc1.type = 'sine';
+  osc1.frequency.value = 55; // Low A
+  const gain1 = audioCtx.createGain();
+  gain1.gain.value = 0.15;
+  osc1.connect(gain1);
+  gain1.connect(gainNode);
+  osc1.start();
+  oscillators.push(osc1);
+
+  // Subtle harmonic
+  const osc2 = audioCtx.createOscillator();
+  osc2.type = 'sine';
+  osc2.frequency.value = 82.5; // Perfect fifth above
+  const gain2 = audioCtx.createGain();
+  gain2.gain.value = 0.06;
+  osc2.connect(gain2);
+  gain2.connect(gainNode);
+  osc2.start();
+  oscillators.push(osc2);
+
+  // High shimmer
+  const osc3 = audioCtx.createOscillator();
+  osc3.type = 'sine';
+  osc3.frequency.value = 220;
+  const gain3 = audioCtx.createGain();
+  gain3.gain.value = 0.02;
+  osc3.connect(gain3);
+  gain3.connect(gainNode);
+  osc3.start();
+  oscillators.push(osc3);
+
+  // Slow LFO modulation on the drone
+  const lfo = audioCtx.createOscillator();
+  lfo.type = 'sine';
+  lfo.frequency.value = 0.08; // Very slow
+  const lfoGain = audioCtx.createGain();
+  lfoGain.gain.value = 3;
+  lfo.connect(lfoGain);
+  lfoGain.connect(osc1.frequency);
+  lfo.start();
+  oscillators.push(lfo);
+
+  // Noise texture
+  const bufferSize = audioCtx.sampleRate * 2;
+  const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = (Math.random() * 2 - 1) * 0.015;
+  }
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = noiseBuffer;
+  noise.loop = true;
+
+  // Low-pass filter on noise
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 200;
+  noise.connect(filter);
+  filter.connect(gainNode);
+  noise.start();
+}
+
+const soundToggle = document.getElementById('soundToggle');
+soundToggle.addEventListener('click', () => {
+  if (!audioCtx) createAmbientSound();
+
+  if (isPlaying) {
+    // Fade out
+    gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
+    isPlaying = false;
+    soundToggle.classList.remove('active');
+  } else {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    // Fade in
+    gainNode.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 1);
+    isPlaying = true;
+    soundToggle.classList.add('active');
+  }
+});
+
+
+// ============================
+// 7. CINEMATIC SCROLL REVEALS
+// ============================
+const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+      revealObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
-// Observe scroll-reveal elements
-document.querySelectorAll('.scroll-reveal, .divider-animated').forEach(el => observer.observe(el));
+document.querySelectorAll('.scroll-reveal, .wipe-reveal, .scale-reveal, .slide-left, .slide-right, .divider-animated').forEach(el => {
+  revealObserver.observe(el);
+});
 
 // Staggered team member reveal
 const teamObserver = new IntersectionObserver(entries => {
@@ -663,7 +1728,6 @@ const statsObserver = new IntersectionObserver(entries => {
       stats.forEach((stat, i) => {
         setTimeout(() => {
           stat.classList.add('visible');
-          // Count-up animation
           const valueEl = stat.querySelector('.stat-value');
           const target = parseInt(stat.dataset.count);
           const suffix = stat.dataset.suffix;
@@ -689,11 +1753,50 @@ document.querySelectorAll('.stats').forEach(el => statsObserver.observe(el));
 
 // Fallback: reveal elements already in viewport on load
 setTimeout(() => {
-  document.querySelectorAll('.scroll-reveal:not(.visible), .divider-animated:not(.visible)').forEach(el => {
+  document.querySelectorAll('.scroll-reveal:not(.visible), .wipe-reveal:not(.visible), .scale-reveal:not(.visible), .slide-left:not(.visible), .slide-right:not(.visible), .divider-animated:not(.visible)').forEach(el => {
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight) el.classList.add('visible');
   });
 }, 200);
+
+
+// ============================
+// 8. PARALLAX ON SCROLL
+// ============================
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+
+      // Parallax the stats background text
+      const statsEl = document.querySelector('.stats');
+      if (statsEl) {
+        const rect = statsEl.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          statsEl.style.setProperty('--parallax', `${(progress - 0.5) * 40}px`);
+        }
+      }
+
+      // Parallax the countdown background text
+      const cdSection = document.querySelector('.countdown-section');
+      if (cdSection) {
+        const rect = cdSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          const beforeEl = cdSection.querySelector('.countdown-title');
+          if (beforeEl) {
+            beforeEl.style.transform = `translateY(${(progress - 0.5) * -20}px)`;
+          }
+        }
+      }
+
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
 </script>
 
 </body>
