@@ -48,6 +48,261 @@ a {
   color: var(--black);
 }
 
+/* ============================
+   SCROLL PROGRESS BAR
+   ============================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--orange);
+  z-index: 9999;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 10px rgba(255, 95, 0, 0.5);
+}
+
+/* ============================
+   PRELOADER
+   ============================ */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.preloader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-brand {
+  font-family: var(--display);
+  font-size: clamp(48px, 10vw, 120px);
+  letter-spacing: 0.05em;
+  font-weight: 900;
+  -webkit-text-stroke: 2px var(--cream);
+  color: transparent;
+  opacity: 0;
+  animation: preloaderFadeIn 0.6s ease 0.2s forwards;
+}
+
+.preloader-brand span {
+  -webkit-text-stroke-color: var(--orange);
+}
+
+@keyframes preloaderFadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.preloader-bar-track {
+  width: clamp(200px, 30vw, 320px);
+  height: 2px;
+  background: rgba(240, 234, 214, 0.1);
+  margin-top: 32px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: preloaderFadeIn 0.4s ease 0.5s forwards;
+}
+
+.preloader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--orange);
+  transition: width 0.3s ease;
+}
+
+.preloader-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0;
+  margin-top: 16px;
+  color: rgba(240, 234, 214, 0.3);
+  animation: preloaderFadeIn 0.4s ease 0.6s forwards;
+}
+
+/* ============================
+   LIVE VISITOR COUNTER
+   ============================ */
+.visitor-counter {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(240, 234, 214, 0.4);
+  opacity: 0;
+  animation: fadeInFull 1s ease 2.5s forwards;
+}
+
+.visitor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff88;
+  animation: visitorPulse 2s ease-in-out infinite;
+}
+
+@keyframes visitorPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 8px 3px rgba(0, 255, 136, 0.15); }
+}
+
+/* ============================
+   BRAND LOGO WALL
+   ============================ */
+.brands-section {
+  padding: clamp(24px, 4vw, 48px) 0;
+  border-top: 1px solid rgba(240, 234, 214, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.brands-label {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  opacity: 0.6;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.brands-marquee-wrap {
+  overflow: hidden;
+}
+
+.brands-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: brandsScroll 20s linear infinite;
+}
+
+.brands-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.brand-item {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(240, 234, 214, 0.2);
+  white-space: nowrap;
+  padding: 0 clamp(16px, 2vw, 28px);
+  transition: color 0.3s;
+}
+
+.brand-item:hover {
+  color: var(--cream);
+}
+
+.brand-dot {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 56px);
+  color: rgba(255, 95, 0, 0.3);
+  padding: 0 clamp(8px, 1vw, 16px);
+}
+
+@keyframes brandsScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================
+   EASTER EGG OVERLAY
+   ============================ */
+.easter-egg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--black);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  pointer-events: none;
+}
+
+.easter-egg-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.easter-egg-text {
+  font-family: var(--display);
+  font-size: clamp(36px, 8vw, 100px);
+  color: var(--orange);
+  text-align: center;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 60px rgba(255, 95, 0, 0.4), 0 0 120px rgba(255, 95, 0, 0.2);
+  animation: easterPulse 0.5s ease;
+}
+
+.easter-egg-sub {
+  font-family: var(--mono);
+  font-size: clamp(10px, 1vw, 13px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 214, 0.4);
+  margin-top: 24px;
+}
+
+@keyframes easterPulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Screen flash for easter egg */
+.screen-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--orange);
+  z-index: 9997;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.screen-flash.flash {
+  animation: flashAnim 0.4s ease;
+}
+
+@keyframes flashAnim {
+  0% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+
 /* FILM GRAIN OVERLAY */
 body::after {
   content: '';
@@ -1068,10 +1323,44 @@ body::after {
   .ip-card {
     width: 260px;
   }
+
+  .visitor-counter {
+    bottom: 12px;
+    left: 12px;
+    font-size: 9px;
+  }
+
 }
 </style>
 </head>
 <body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="preloader-brand">बना<span>ओ</span></div>
+  <div class="preloader-bar-track">
+    <div class="preloader-bar-fill" id="preloaderBar"></div>
+  </div>
+  <div class="preloader-text" id="preloaderText">Loading experience...</div>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- SCREEN FLASH (Easter Egg) -->
+<div class="screen-flash" id="screenFlash"></div>
+
+<!-- EASTER EGG OVERLAY -->
+<div class="easter-egg-overlay" id="easterEgg">
+  <div class="easter-egg-text">YOU FOUND IT.<br>YOU'RE BUILT DIFFERENT.</div>
+  <div class="easter-egg-sub">Press any key to go back</div>
+</div>
+
+<!-- LIVE VISITOR COUNTER -->
+<div class="visitor-counter" id="visitorCounter">
+  <div class="visitor-dot"></div>
+  <span id="visitorCount">—</span> watching right now
+</div>
 
 <!-- INTERACTIVE PARTICLE CANVAS -->
 <canvas id="particle-canvas"></canvas>
@@ -1327,6 +1616,30 @@ body::after {
       <div class="stat-label">VC Money</div>
     </div>
   </section>
+
+  <!-- BRAND MARQUEE -->
+  <section class="brands-section">
+    <p class="brands-label">Partners</p>
+    <div class="brands-marquee-wrap">
+      <div class="brands-marquee-track">
+        <span class="brand-item">OpenAI</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Gemini</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Higgsfield</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">OpenAI</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Gemini</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Higgsfield</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">OpenAI</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Gemini</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Higgsfield</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">OpenAI</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Gemini</span><span class="brand-dot">&middot;</span>
+        <span class="brand-item">Higgsfield</span><span class="brand-dot">&middot;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANIMATED DIVIDER -->
+  <div class="divider-animated"></div>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -1792,6 +2105,133 @@ window.addEventListener('scroll', () => {
       ticking = false;
     });
     ticking = true;
+  }
+});
+
+
+// ============================
+// 9. PRELOADER
+// ============================
+const preloader = document.getElementById('preloader');
+const preloaderBar = document.getElementById('preloaderBar');
+const preloaderText = document.getElementById('preloaderText');
+
+const loadSteps = [
+  { pct: 15, text: 'Loading assets...' },
+  { pct: 35, text: 'Initializing particles...' },
+  { pct: 55, text: 'Setting up experience...' },
+  { pct: 75, text: 'Preparing content...' },
+  { pct: 90, text: 'Almost ready...' },
+  { pct: 100, text: 'Let\'s go.' }
+];
+
+let stepIndex = 0;
+function runPreloader() {
+  if (stepIndex < loadSteps.length) {
+    const step = loadSteps[stepIndex];
+    preloaderBar.style.width = step.pct + '%';
+    preloaderText.textContent = step.text;
+    stepIndex++;
+    setTimeout(runPreloader, 300 + Math.random() * 200);
+  } else {
+    setTimeout(() => {
+      preloader.classList.add('done');
+      document.body.style.overflow = '';
+    }, 400);
+  }
+}
+
+// Block scroll during preloader
+document.body.style.overflow = 'hidden';
+runPreloader();
+
+
+// ============================
+// 10. SCROLL PROGRESS BAR
+// ============================
+const scrollProgressEl = document.getElementById('scrollProgress');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrollProgressEl.style.width = progress + '%';
+});
+
+
+// ============================
+// 11. LIVE VISITOR COUNTER
+// ============================
+const visitorCountEl = document.getElementById('visitorCount');
+
+// Simulate realistic visitor count (between 12–67)
+function getVisitorCount() {
+  const base = 24;
+  const variance = Math.floor(Math.random() * 40) - 15;
+  return Math.max(8, base + variance);
+}
+
+let currentVisitors = getVisitorCount();
+visitorCountEl.textContent = currentVisitors;
+
+// Fluctuate every 3-8 seconds
+function updateVisitors() {
+  const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+  currentVisitors = Math.max(5, Math.min(70, currentVisitors + change));
+  visitorCountEl.textContent = currentVisitors;
+  setTimeout(updateVisitors, 3000 + Math.random() * 5000);
+}
+
+setTimeout(updateVisitors, 4000);
+
+
+// ============================
+// 12. EASTER EGG — KONAMI CODE
+// ============================
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiIndex = 0;
+const easterEgg = document.getElementById('easterEgg');
+const screenFlash = document.getElementById('screenFlash');
+
+document.addEventListener('keydown', (e) => {
+  // If easter egg is showing, dismiss it
+  if (easterEgg.classList.contains('active')) {
+    easterEgg.classList.remove('active');
+    konamiIndex = 0;
+    return;
+  }
+
+  if (e.key === konamiCode[konamiIndex]) {
+    konamiIndex++;
+    if (konamiIndex === konamiCode.length) {
+      // Trigger easter egg
+      screenFlash.classList.add('flash');
+      setTimeout(() => screenFlash.classList.remove('flash'), 400);
+      setTimeout(() => easterEgg.classList.add('active'), 200);
+      konamiIndex = 0;
+    }
+  } else {
+    konamiIndex = 0;
+  }
+});
+
+
+// ============================
+// 13. DYNAMIC TAB TITLE (bonus)
+// ============================
+const originalTitle = document.title;
+let titleInterval = null;
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    let toggle = false;
+    titleInterval = setInterval(() => {
+      document.title = toggle ? 'Come back... 👀' : 'BANAO STUDIOS';
+      toggle = !toggle;
+    }, 1500);
+  } else {
+    clearInterval(titleInterval);
+    document.title = originalTitle;
   }
 });
 </script>
