@@ -1982,22 +1982,22 @@ function createAmbientSound() {
 }
 
 const soundToggle = document.getElementById('soundToggle');
-soundToggle.addEventListener('click', () => {
-  if (!audioCtx) createAmbientSound();
+if (soundToggle) {
+  soundToggle.addEventListener('click', () => {
+    if (!audioCtx) createAmbientSound();
 
-  if (isPlaying) {
-    // Fade out
-    gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
-    isPlaying = false;
-    soundToggle.classList.remove('active');
-  } else {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    // Fade in
-    gainNode.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 1);
-    isPlaying = true;
-    soundToggle.classList.add('active');
-  }
-});
+    if (isPlaying) {
+      gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
+      isPlaying = false;
+      soundToggle.classList.remove('active');
+    } else {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      gainNode.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 1);
+      isPlaying = true;
+      soundToggle.classList.add('active');
+    }
+  });
+}
 
 
 // ============================
