@@ -28,7 +28,10 @@ html {
 
 html, body {
   height: 100%;
-  overflow: hidden;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -2395,8 +2398,6 @@ document.addEventListener('visibilitychange', () => {
   function endSlideshow() {
     clearInterval(timer);
     intro.classList.add('done');
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
     setTimeout(function() { intro.remove(); }, 900);
   }
 
